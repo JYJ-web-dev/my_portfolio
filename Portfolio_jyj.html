@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>장윤정 바이브코딩 프로젝트 도록 — Generative Web Archive</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter, Noto Sans KR, Plus Jakarta Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans KR"', 'Inter', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', '"Noto Sans KR"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            bv: {
+              50: '#EEF2FF',
+              100: '#E0E7FF',
+              200: '#C7D2FE',
+              300: '#A5B4FC',
+              400: '#818CF8',
+              500: '#6366F1',
+              600: '#4F46E5',
+              700: '#4338CA',
+              800: '#3730A3',
+              900: '#312E81',
+              950: '#1E1B4B',
+            },
+            onyx: {
+              50: '#F8FAFC',
+              100: '#F1F5F9',
+              200: '#E2E8F0',
+              300: '#CBD5E1',
+              400: '#94A3B8',
+              500: '#64748B',
+              600: '#475569',
+              700: '#334155',
+              800: '#1E293B',
+              900: '#0F172A',
+              950: '#09090B',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Sleek Monochrome Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #FAFAFA; }
+    ::-webkit-scrollbar-thumb { background: #C7D2FE; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #4F46E5; }
+
+    .gallery-bg {
+      background-color: #FAFAFC;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 45%),
+        radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.04) 0px, transparent 45%);
+    }
+
+    /* Minimalist Gallery Card with Blue-Violet Border Accent */
+    .gallery-card {
+      background: #FFFFFF;
+      border: 1px solid #E0E7FF;
+      box-shadow: 0 1px 3px rgba(99, 102, 241, 0.02), 0 4px 12px rgba(15, 23, 42, 0.02);
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .gallery-card:hover {
+      border-color: #6366F1;
+      box-shadow: 0 14px 28px -4px rgba(79, 70, 229, 0.12), 0 4px 10px -2px rgba(99, 102, 241, 0.04);
+      transform: translateY(-3px);
+    }
+
+    .glass-header {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+  </style>
+</head>
+<body class="gallery-bg text-zinc-900 min-h-screen flex flex-col font-sans selection:bg-indigo-100 selection:text-indigo-950 antialiased">
+
+  <!-- ==================== TOP NAVIGATION HEADER ==================== -->
+  <header class="border-b border-indigo-100/90 glass-header sticky top-0 z-40 transition-all shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Identity with Blue-Violet Gradient -->
+      <div class="flex items-center gap-3.5">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-700 via-indigo-600 to-violet-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 border border-indigo-400/40">
+          <span class="font-display font-extrabold text-xs tracking-wider">JYJ</span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <!-- English Subtitle Tag with Blue-Violet Tint -->
+            <span class="text-[10px] font-mono tracking-wider text-indigo-700 uppercase font-semibold bg-indigo-50/80 px-2 py-0.5 rounded-md border border-indigo-200/80">
+              Generative Web Archive — Curated &amp; worked by JYJ
+            </span>
+          </div>
+          <!-- Main Korean Title with Deep Indigo Accent -->
+          <h1 class="font-display font-extrabold text-base sm:text-lg tracking-tight mt-0.5">
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-zinc-950 via-indigo-950 to-indigo-700">
+              장윤정 바이브코딩 프로젝트 도록
+            </span>
+          </h1>
+        </div>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="flex items-center gap-2 sm:gap-2.5">
+        <!-- Direct Bridge Importer Button -->
+        <button onclick="openBridgeModal()" title="1번 기획 앱에서 복사한 데이터 가져오기" class="px-3.5 py-2 rounded-xl bg-indigo-50/80 hover:bg-indigo-100 text-indigo-950 text-xs font-bold border border-indigo-200 transition-all flex items-center gap-1.5 shadow-2xs">
+          <span class="text-sm">🚀</span>
+          <span class="hidden md:inline">기획 도구 연동</span>
+        </button>
+
+        <!-- Add Project Button with Blue-Violet Gradient Accent -->
+        <button onclick="openAddProjectModal()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white text-xs font-bold transition-all shadow-md shadow-indigo-500/20 flex items-center gap-1.5 border border-indigo-500">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M12 4v16m8-8H4" />
+          </svg>
+          <span class="hidden sm:inline">새 프로젝트 등록</span>
+          <span class="sm:hidden">등록</span>
+        </button>
+
+        <!-- Catalogue Export Document Generator -->
+        <button onclick="openExportModal()" class="px-3.5 py-2 rounded-xl bg-white hover:bg-indigo-50 text-zinc-900 text-xs font-bold border border-indigo-200 transition-all flex items-center gap-1.5 shadow-2xs">
+          <svg class="w-4 h-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <span class="hidden lg:inline">제안서용 실적 도록 출력</span>
+          <span class="lg:hidden">도록 출력</span>
+        </button>
+
+        <!-- JSON Backup / Restore -->
+        <div class="flex items-center gap-1 border-l border-indigo-100 pl-2">
+          <button onclick="exportDataJson()" title="JSON 데이터 백업 다운로드" class="p-2 rounded-xl bg-white hover:bg-indigo-50 text-indigo-700 hover:text-indigo-950 border border-indigo-200 transition-all shadow-2xs">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+          </button>
+          <button onclick="triggerDataImport()" title="JSON 데이터 복원" class="p-2 rounded-xl bg-white hover:bg-indigo-50 text-indigo-700 hover:text-indigo-950 border border-indigo-200 transition-all shadow-2xs">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l4-4m0 0l4 4m-4-4v12" /></svg>
+          </button>
+          <input type="file" id="import-json-file" accept=".json" class="hidden" onchange="handleDataImport(event)">
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+    <!-- HERO SECTION: Gallery Catalogue Identity with Blue-Violet Border & Title Accent -->
+    <section class="bg-gradient-to-b from-white via-white to-indigo-50/30 border border-indigo-100 rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-xs ring-1 ring-indigo-500/10">
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
+        <div class="max-w-2xl space-y-3">
+          
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 text-indigo-800 text-[11px] font-mono font-semibold border border-indigo-200">
+            <span class="w-2 h-2 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600"></span>
+            Generative Web Archive — Curated &amp; worked by JYJ
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display font-extrabold tracking-tight">
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-zinc-950 via-indigo-950 to-indigo-700">
+              장윤정 바이브코딩 프로젝트 도록
+            </span>
+          </h2>
+
+          <p class="text-xs sm:text-sm text-zinc-600 font-medium leading-relaxed">
+            자연어 기반 바이브코딩으로 구현된 웹 애플리케이션의 핵심 기획 뼈대(Topic, Target, MVP, Vibe, IA, Action)와 첫 화면을 체계적으로 큐레이션한 공식 프로젝트 실적 도록입니다.
+          </p>
+        </div>
+
+        <!-- Metric Counter Chips with Subtle Blue-Violet Border -->
+        <div class="grid grid-cols-3 gap-3 w-full lg:w-auto">
+          <div class="px-5 py-3.5 rounded-2xl bg-white border border-indigo-100 text-center min-w-[100px] shadow-2xs">
+            <span class="text-[11px] text-zinc-500 block font-bold uppercase tracking-wider">전체 도록</span>
+            <span id="stat-total-projects" class="font-mono text-2xl font-extrabold text-zinc-950 mt-0.5 block">0</span>
+          </div>
+          <div class="px-5 py-3.5 rounded-2xl bg-gradient-to-b from-indigo-50/60 to-white border border-indigo-200 text-center min-w-[100px] shadow-2xs ring-1 ring-indigo-500/10">
+            <span class="text-[11px] text-indigo-900 block font-bold uppercase tracking-wider">현장 검증 실적</span>
+            <div class="flex items-center justify-center gap-1.5 mt-0.5">
+              <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
+              <span id="stat-in-use-projects" class="font-mono text-2xl font-extrabold text-indigo-700">0</span>
+            </div>
+          </div>
+          <div class="px-5 py-3.5 rounded-2xl bg-white border border-indigo-100 text-center min-w-[100px] shadow-2xs">
+            <span class="text-[11px] text-zinc-500 block font-bold uppercase tracking-wider">AI 플랫폼</span>
+            <span id="stat-ai-platforms" class="font-mono text-2xl font-extrabold text-zinc-950 mt-0.5 block">0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTROLS & FILTER TOOLBAR -->
+    <section class="bg-white border border-indigo-100/90 rounded-2xl p-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 shadow-2xs">
+      
+      <!-- Year Filter Tabs -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none" id="year-filter-container">
+        <button onclick="setYearFilter('all')" id="year-btn-all" class="year-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xs shadow-indigo-500/20 whitespace-nowrap border border-indigo-500">
+          전체 연도
+        </button>
+        <button onclick="setYearFilter('2026')" id="year-btn-2026" class="year-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-zinc-600 hover:text-indigo-900 hover:bg-indigo-50 whitespace-nowrap">
+          2026년
+        </button>
+        <button onclick="setYearFilter('2025')" id="year-btn-2025" class="year-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-zinc-600 hover:text-indigo-900 hover:bg-indigo-50 whitespace-nowrap">
+          2025년
+        </button>
+        <button onclick="setYearFilter('2024')" id="year-btn-2024" class="year-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-zinc-600 hover:text-indigo-900 hover:bg-indigo-50 whitespace-nowrap">
+          2024년
+        </button>
+      </div>
+
+      <!-- Segmented Status Switcher & Search Bar -->
+      <div class="flex flex-wrap sm:flex-nowrap items-center gap-3">
+        <!-- Usage Filter Switch -->
+        <div class="flex items-center bg-indigo-50/70 p-1 rounded-xl border border-indigo-100 text-xs font-semibold">
+          <button onclick="setUsageFilter('all')" id="usage-filter-all" class="usage-tab-btn px-3 py-1 rounded-lg bg-white text-indigo-950 shadow-2xs font-bold border border-indigo-100">
+            전체 보기
+          </button>
+          <button onclick="setUsageFilter('active')" id="usage-filter-active" class="usage-tab-btn px-3 py-1 rounded-lg text-zinc-600 hover:text-indigo-900 flex items-center gap-1.5 font-medium">
+            <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+            <span>현장 실적만</span>
+          </button>
+          <button onclick="setUsageFilter('lab')" id="usage-filter-lab" class="usage-tab-btn px-3 py-1 rounded-lg text-zinc-600 hover:text-indigo-900 font-medium">
+            연구/프로토타입
+          </button>
+        </div>
+
+        <!-- Search Bar with Blue-Violet Focus Ring -->
+        <div class="relative w-full sm:w-64">
+          <input type="text" id="search-input" oninput="handleSearch()" placeholder="작품명, 대상, 플랫폼 검색..." 
+                 class="w-full bg-zinc-50 border border-indigo-100 rounded-xl pl-9 pr-3 py-1.5 text-xs text-zinc-950 placeholder-zinc-400 focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 focus:bg-white transition-all">
+          <svg class="w-4 h-4 text-indigo-400 absolute left-3 top-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- PROJECT CARDS GALLERY GRID -->
+    <section>
+      <div id="project-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Injected dynamically via JS -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="hidden bg-white border border-zinc-200 rounded-3xl p-12 text-center space-y-4 max-w-md mx-auto my-12 shadow-xs">
+        <div class="w-14 h-14 rounded-2xl bg-zinc-100 border border-zinc-200 mx-auto flex items-center justify-center text-lg font-mono text-zinc-900 font-bold">
+          [ 0 ]
+        </div>
+        <div>
+          <h3 class="font-bold text-zinc-950 text-base">해당 조건의 도록 작품이 없습니다</h3>
+          <p class="text-xs text-zinc-500 mt-1">검색어를 초기화하거나 새로운 바이브코딩 웹서비스를 등록하세요.</p>
+        </div>
+        <button onclick="openAddProjectModal()" class="px-4 py-2 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-white text-xs font-bold transition-all shadow-xs">
+          새 프로젝트 등록하기
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- 1. ADD / EDIT PROJECT MODAL -->
+  <div id="project-modal" class="fixed inset-0 z-50 bg-zinc-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white border border-indigo-100 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-5 my-8 max-h-[92vh] overflow-y-auto ring-1 ring-indigo-500/10">
+      
+      <div class="flex items-center justify-between border-b border-indigo-100 pb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-700 to-violet-600 text-white flex items-center justify-center text-xs font-mono font-bold shadow-xs">
+            DOC
+          </div>
+          <div>
+            <h3 id="modal-title" class="font-display font-bold text-base sm:text-lg text-zinc-950">도록 작품 등록</h3>
+            <p class="text-xs text-indigo-600 font-medium">장윤정 바이브코딩 프로젝트 도록에 수록할 명세를 입력하세요.</p>
+          </div>
+        </div>
+        <button onclick="closeProjectModal()" class="text-zinc-400 hover:text-zinc-950 p-1.5 rounded-lg hover:bg-zinc-100 transition-all">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+
+      <form id="project-form" onsubmit="handleSaveProject(event)" class="space-y-4">
+        <input type="hidden" id="form-project-id">
+
+        <!-- Row 1: Title & Platform -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-zinc-800 mb-1">웹서비스 이름 (작품명) *</label>
+            <input type="text" id="form-title" required placeholder="예: 스마트 견적서 & 인보이스 계산기" 
+                   class="w-full bg-zinc-50 border border-zinc-300 rounded-xl px-3.5 py-2 text-xs text-zinc-950 focus:outline-none focus:border-zinc-900 focus:bg-white transition-all">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-zinc-800 mb-1">작업 플랫폼 (AI 코딩 도구) *</label>
+            <select id="form-platform" required class="w-full bg-zinc-50 border border-zinc-300 rounded-xl px-3.5 py-2 text-xs text-zinc-950 font-semibold focus:outline-none focus:border-zinc-900 focus:bg-white transition-all">
+              <option value="Gemini Canvas">Gemini Canvas (제미나이 캔버스)</option>
+              <option value="Claude Artifacts">Claude Artifacts (클로드)</option>
+              <option value="Canva (캔바 코드)">Canva (캔바 코드 / 웹 임베드)</option>
+              <option value="Cursor / Windsurf">Cursor / Windsurf IDE (에이전트)</option>
+              <option value="ChatGPT Canvas">ChatGPT Canvas (챗GPT 캔버스)</option>
+              <option value="v0.dev">v0.dev (Vercel v0)</option>
+              <option value="기타 생성형 AI">기타 생성형 AI 엔진</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Row 2: Target & Creators (JYJ fixed + optional Collaborator) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-zinc-800 mb-1">대상 (타깃) *</label>
+            <input type="text" id="form-target" required placeholder="예: 제안서 심사위원, 1인 창업가" 
+                   class="w-full bg-zinc-50 border border-zinc-300 rounded-xl px-3.5 py-2 text-xs text-zinc-950 focus:outline-none focus:border-zinc-900 focus:bg-white transition-all">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-zinc-800 mb-1">제작자 (고정)</label>
+            <div class="w-full bg-zinc-100 border border-zinc-300 rounded-xl px-3.5 py-2 text-xs font-bold text-zinc-950 flex items-center justify-between">
+              <span>장윤정 (JYJ)</span>
+              <span class="text-[10px] text-zinc-500 font-mono font-medium">총괄 기획·개발</span>
+            </div>
+            <input type="hidden" id="form-creator" value="장윤정">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-zinc-800 mb-1">협력 제작자 (선택)</label>
+            <input type="text" id="form-collaborator" placeholder="단독 제작 시 비워둠" 
+                   class="w-full bg-zinc-50 border border-zinc-300 rounded-xl px-3.5 py-2 text-xs text-zinc-950 focus:outline-none focus:border-zinc-900 focus:bg-white transition-all">
+          </div>
+        </div>
+
+        <!-- Row 3: Description -->
+        <div>
+          <label class="block text-xs font-bold text-zinc-800 mb-1">서비스 개요 및 활용 목적 *</label>
+          <textarea id="form-desc" required rows="2" placeholder="해결하려는 핵심 문제와 실전 활용 목적을 명확히 작성하세요." 
+                    class="w-full bg-zinc-50 border border-zinc-300 rounded-xl p-3 text-xs text-zinc-950 focus:outline-none focus:border-zinc-900 focus:bg-white transition-all"></textarea>
+        </div>
+
+        <!-- Row 4: URL, Year, Updated Date -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold text-zinc-800 mb-1">실행 링크 (URL 또는 배포 파일)</label>
+            <input type="text" id="form-url" placeholder="https://... 또는 index.html" 
+                   class="w-full bg-zinc-50 border border-zinc-300 rounded-xl px-3.5 py-2 text-xs text-zinc-950 focus:outline-none focus:border-zinc-900 focus:bg-white transition-all">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-zinc-800 mb-1">제작 연도 / 최신일 *</label>
+            <div class="flex gap-2">
+              <select id="form-year" class="bg-zinc-50 border border-zinc-300 rounded-xl px-2.5 py-2 text-xs text-zinc-950 font-semibold">
+                <option value="2026">2026</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+              </select>
+              <input type="date" id="form-updated-at" required class="w-full bg-zinc-50 border border-zinc-300 rounded-xl px-2 py-2 text-xs text-zinc-950">
+            </div>
+          </div>
+        </div>
+
+        <!-- Verified In-Use Switch -->
+        <div class="p-3.5 rounded-2xl bg-zinc-50 border border-zinc-200 flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold text-zinc-950 block">실제 활용 여부 (현장/업무/수업 검증 실적)</span>
+            <span class="text-[11px] text-zinc-500">실제 현장이나 제안서 심사에 증빙으로 제출 가능한 검증작인지 표시합니다.</span>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="form-in-use" class="sr-only peer">
+            <div class="w-11 h-6 bg-zinc-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-zinc-950"></div>
+          </label>
+        </div>
+
+        <!-- Row 5: 3 Key Features -->
+        <div>
+          <label class="block text-xs font-bold text-zinc-800 mb-1">주요 핵심 기능 3가지 (각 줄에 입력)</label>
+          <textarea id="form-features" rows="2" placeholder="1. 실시간 견적 품목 추가 및 10% 부가세 자동 합산&#10;2. 반응형 모바일 모달 출력 및 상태 토글&#10;3. 간결 서식 원클릭 복사 및 데이터 백업" 
+                    class="w-full bg-zinc-50 border border-zinc-300 rounded-xl p-3 text-xs text-zinc-950 focus:outline-none focus:border-zinc-900 focus:bg-white transition-all font-mono"></textarea>
+        </div>
+
+        <!-- Row 6: First Screen Graphic: Local Image Upload or Curated Monochrome Icon -->
+        <div class="p-4 rounded-2xl bg-white border border-zinc-300 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-zinc-950">첫 화면 비주얼 &amp; 도록 썸네일</span>
+            <span class="text-[11px] text-zinc-500">캡처 이미지 파일 직접 업로드 또는 심볼 선택</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Left: Curated Minimal Icon Picker -->
+            <div>
+              <label class="block text-[11px] font-bold text-zinc-600 mb-1">도록 심볼 아이콘</label>
+              <div class="flex items-center gap-2">
+                <div id="icon-preview-box" class="w-11 h-11 rounded-xl bg-zinc-100 border border-zinc-300 flex items-center justify-center text-xl font-mono text-zinc-900">
+                  ■
+                </div>
+                <input type="hidden" id="form-thumb-icon" value="■">
+                <button type="button" onclick="openIconPickerModal()" class="px-3 py-2 rounded-xl bg-zinc-50 hover:bg-zinc-100 border border-zinc-300 text-zinc-800 text-xs font-semibold transition-all">
+                  심볼 선택...
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: Local Image File Upload -->
+            <div>
+              <label class="block text-[11px] font-bold text-zinc-600 mb-1">첫 화면 캡처 이미지 (PC 파일 직접 업로드)</label>
+              <div class="flex items-center gap-2">
+                <input type="file" id="form-thumb-file" accept="image/*" class="hidden" onchange="handleImageFileUpload(event)">
+                <button type="button" onclick="document.getElementById('form-thumb-file').click()" class="px-3 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 text-zinc-900 text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs">
+                  <svg class="w-4 h-4 text-zinc-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                  <span>내 PC 이미지 선택</span>
+                </button>
+                <button type="button" id="btn-remove-image" onclick="removeUploadedImage()" class="hidden px-2 py-2 text-xs text-rose-600 hover:bg-rose-50 rounded-lg">
+                  제거
+                </button>
+              </div>
+              <div id="image-upload-status" class="text-[10px] text-zinc-400 mt-1 truncate">
+                등록된 이미지 없음 (심볼 그래픽 적용)
+              </div>
+              <input type="hidden" id="form-uploaded-img-data" value="">
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 7: Updates & Feedback -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-zinc-800 mb-1">이전 업데이트 내역</label>
+            <textarea id="form-past-updates" rows="2" placeholder="v1.0: 6대 기획 뼈대 기반 초기 빌드 완성" class="w-full bg-zinc-50 border border-zinc-300 rounded-xl p-2.5 text-xs text-zinc-950 focus:outline-none focus:border-zinc-900"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-zinc-800 mb-1">다음 업데이트 계획</label>
+            <textarea id="form-next-updates" rows="2" placeholder="v1.1: 반응형 터치 UX 개선 및 연동 확장" class="w-full bg-zinc-50 border border-zinc-300 rounded-xl p-2.5 text-xs text-zinc-950 focus:outline-none focus:border-zinc-900"></textarea>
+          </div>
+        </div>
+
+        <!-- User Feedback Field -->
+        <div>
+          <label class="block text-xs font-bold text-zinc-800 mb-1">사용자 및 평가위원 피드백</label>
+          <textarea id="form-user-feedback" rows="2" placeholder="“현장 적용성이 매우 높고 제안서 증빙 자료로 인용하기에 훌륭합니다.”" class="w-full bg-zinc-50 border border-zinc-300 rounded-xl p-2.5 text-xs text-zinc-950 focus:outline-none focus:border-zinc-900"></textarea>
+        </div>
+
+        <!-- Submit Buttons -->
+        <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-indigo-100">
+          <button type="button" onclick="closeProjectModal()" class="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700 text-xs font-semibold transition-all">취소</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white text-xs font-bold transition-all shadow-md shadow-indigo-500/20">도록 등록</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. DIRECT BRIDGE IMPORT MODAL -->
+  <div id="bridge-modal" class="fixed inset-0 z-50 bg-zinc-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-zinc-300 rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-zinc-200 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🚀</span>
+          <div>
+            <h4 class="font-display font-bold text-base text-zinc-950">기획 도구 데이터 가져오기 (Bridge Sync)</h4>
+            <p class="text-xs text-zinc-500">1번 앱(VibePlan Studio)의 [포트폴리오 브릿지] 탭에서 복사한 JSON을 붙여넣으세요.</p>
+          </div>
+        </div>
+        <button onclick="closeBridgeModal()" class="text-zinc-400 hover:text-zinc-950">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+
+      <div class="space-y-2">
+        <label class="block text-xs font-bold text-zinc-800">붙여넣기 창:</label>
+        <textarea id="bridge-input-text" rows="8" placeholder='{"id": "proj-...", "title": "...", "target": "...", ...}' 
+                  class="w-full bg-zinc-50 border border-zinc-300 rounded-xl p-3 text-xs font-mono text-zinc-950 focus:outline-none focus:border-zinc-900"></textarea>
+      </div>
+
+      <div class="flex items-center justify-between pt-2">
+        <span class="text-[11px] text-zinc-400">형식 오류 시 안전하게 알림이 뜹니다.</span>
+        <div class="flex gap-2">
+          <button onclick="closeBridgeModal()" class="px-3.5 py-1.5 rounded-xl bg-zinc-100 text-zinc-700 text-xs font-semibold">닫기</button>
+          <button onclick="executeBridgeImport()" class="px-4 py-1.5 rounded-xl bg-zinc-950 text-white text-xs font-bold shadow-xs">가져오기 실행</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. SYMBOL PICKER MODAL -->
+  <div id="icon-picker-modal" class="fixed inset-0 z-50 bg-zinc-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-zinc-300 rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-zinc-200 pb-3">
+        <div>
+          <h4 class="font-bold text-zinc-950 text-sm">도록 심볼 아이콘 선택</h4>
+          <p class="text-[11px] text-zinc-500">도록에 정돈된 느낌을 주는 기하학적·모노크롬 아이콘입니다.</p>
+        </div>
+        <button onclick="closeIconPickerModal()" class="text-zinc-400 hover:text-zinc-950">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-6 gap-2.5 max-h-72 overflow-y-auto p-1 font-mono text-lg" id="icon-grid-container">
+        <!-- Injected via JS -->
+      </div>
+
+      <div class="pt-2 border-t border-zinc-100 flex justify-end">
+        <button onclick="closeIconPickerModal()" class="px-3.5 py-1.5 rounded-xl bg-zinc-100 text-zinc-700 text-xs font-semibold">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. EXHIBITION LIGHTBOX ZOOM MODAL -->
+  <div id="lightbox-modal" class="fixed inset-0 z-50 bg-zinc-950/80 backdrop-blur-md hidden flex items-center justify-center p-4" onclick="closeLightbox(event)">
+    <div class="bg-white border border-indigo-200 rounded-3xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl relative overflow-hidden ring-1 ring-indigo-500/20" onclick="event.stopPropagation()">
+      <button onclick="closeLightboxModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-zinc-950 p-2 rounded-full bg-zinc-100 hover:bg-zinc-200 transition-all">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+
+      <div class="space-y-4">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span id="zoom-badge-platform" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-indigo-50 text-indigo-800 border border-indigo-200 font-bold">Platform</span>
+          <span id="zoom-badge-year" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-zinc-100 text-zinc-700 border border-zinc-200 font-semibold">2026</span>
+          <span id="zoom-badge-usage" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold flex items-center gap-1">실적 검증</span>
+        </div>
+
+        <h3 id="zoom-title" class="text-xl sm:text-2xl font-display font-extrabold text-zinc-950">작품명</h3>
+        <p id="zoom-desc" class="text-xs sm:text-sm text-zinc-600 leading-relaxed">상세 설명</p>
+
+        <!-- Exhibition Screen Frame with Blue-Violet Border Accent -->
+        <div id="zoom-screen-container" class="w-full h-72 sm:h-96 rounded-2xl bg-indigo-50/40 border border-indigo-200 p-3 flex flex-col items-center justify-center relative overflow-hidden shadow-inner">
+          <img id="zoom-screen-img" class="hidden w-full h-full object-contain rounded-xl" src="" alt="First Screen Exhibition">
+          <div id="zoom-screen-icon-wrap" class="flex flex-col items-center justify-center text-center p-6">
+            <div id="zoom-screen-icon" class="text-6xl sm:text-7xl font-mono text-indigo-700 mb-3">■</div>
+            <span class="text-xs font-mono tracking-widest text-indigo-400 font-bold uppercase">Generative Web Archive — Curated &amp; worked by JYJ</span>
+          </div>
+        </div>
+
+        <!-- 3-Column Specifications Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+          <div class="p-3 rounded-xl bg-indigo-50/50 border border-indigo-100">
+            <span class="text-[10px] font-bold text-indigo-400 block uppercase tracking-wider">대상 (타깃)</span>
+            <p id="zoom-target" class="text-xs text-zinc-950 font-bold mt-0.5">-</p>
+          </div>
+          <div class="p-3 rounded-xl bg-white border border-indigo-100">
+            <span class="text-[10px] font-bold text-indigo-600 block uppercase tracking-wider">제작자 / 협력자</span>
+            <p id="zoom-creators" class="text-xs text-zinc-950 font-bold mt-0.5">장윤정 (JYJ)</p>
+          </div>
+          <div class="p-3 rounded-xl bg-indigo-50/50 border border-indigo-100">
+            <span class="text-[10px] font-bold text-indigo-400 block uppercase tracking-wider">최신 업데이트</span>
+            <p id="zoom-updated-at" class="text-xs text-zinc-950 font-mono mt-0.5">2026-09-21</p>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-3 border-t border-indigo-100">
+          <span class="text-xs text-zinc-500 font-medium">아카이브 총괄: <strong class="text-indigo-950">장윤정 (JYJ)</strong></span>
+          <a id="zoom-launch-btn" href="#" target="_blank" class="px-5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white text-xs font-bold transition-all shadow-md shadow-indigo-500/20 flex items-center gap-1.5">
+            <span>실행 링크 열기</span>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. PROPOSAL & RESUME CATALOGUE EXPORT MODAL -->
+  <div id="export-modal" class="fixed inset-0 z-50 bg-zinc-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-zinc-300 rounded-3xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl space-y-4 my-8 max-h-[90vh] flex flex-col">
+      
+      <div class="flex items-center justify-between border-b border-zinc-200 pb-3 flex-shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-zinc-950 text-white flex items-center justify-center text-xs font-mono font-bold">
+            DOC
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-base sm:text-lg text-zinc-950">제안서·이력서용 실적 도록 출력기</h3>
+            <p class="text-xs text-zinc-500">공공기관·기업 제안서 별첨 자료에 복사해 즉시 제출 가능한 정돈된 공식 서식입니다.</p>
+          </div>
+        </div>
+        <button onclick="closeExportModal()" class="text-zinc-400 hover:text-zinc-950 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+
+      <!-- Scope Controls -->
+      <div class="flex flex-wrap items-center justify-between gap-3 text-xs bg-zinc-50 p-3 rounded-2xl border border-zinc-200 flex-shrink-0">
+        <div class="flex items-center gap-4">
+          <span class="font-bold text-zinc-900">수록 범위:</span>
+          <label class="inline-flex items-center gap-1.5 cursor-pointer text-zinc-900">
+            <input type="radio" name="exportScope" value="all" checked onchange="renderExportContent()" class="accent-zinc-950"> 전체 도록 수록
+          </label>
+          <label class="inline-flex items-center gap-1.5 cursor-pointer text-zinc-900 font-semibold">
+            <input type="radio" name="exportScope" value="inUseOnly" onchange="renderExportContent()" class="accent-zinc-950"> 현장 검증 실적작만
+          </label>
+        </div>
+
+        <button onclick="copyExportText()" class="px-4 py-2 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-white font-bold text-xs transition-all shadow-sm flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+          <span>도록 문서 전체 복사</span>
+        </button>
+      </div>
+
+      <!-- Catalogue Preformatted Output -->
+      <div class="flex-1 overflow-y-auto bg-zinc-50 border border-zinc-200 rounded-2xl p-5 font-mono text-xs text-zinc-800 leading-relaxed whitespace-pre-wrap selection:bg-zinc-950 selection:text-white" id="export-text-box">
+        <!-- Injected via JS -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 6. DELETE CONFIRMATION MODAL -->
+  <div id="delete-modal" class="fixed inset-0 z-50 bg-zinc-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-zinc-300 rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center gap-3 text-zinc-950">
+        <div class="w-10 h-10 rounded-xl bg-zinc-100 border border-zinc-200 flex items-center justify-center flex-shrink-0 text-sm font-bold font-mono text-zinc-950">
+          DEL
+        </div>
+        <div>
+          <h4 class="font-bold text-zinc-950 text-sm">작품 삭제 확인</h4>
+          <p class="text-xs text-zinc-500">도록 아카이브에서 완전히 제거됩니다.</p>
+        </div>
+      </div>
+      <p class="text-xs text-zinc-600 leading-relaxed" id="delete-confirm-text">해당 프로젝트를 삭제하시겠습니까?</p>
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button onclick="closeDeleteModal()" class="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700 text-xs font-semibold">취소</button>
+        <button onclick="executeDeleteProject()" class="px-4 py-2 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-white text-xs font-bold shadow-xs">삭제 실행</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INLINE TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-zinc-950 text-white shadow-xl text-xs font-semibold border border-zinc-800">
+    <span class="w-2 h-2 rounded-full bg-white"></span>
+    <span id="toast-message">알림</span>
+  </div>
+
+  <!-- ==================== JAVASCRIPT APPLICATION CORE ==================== -->
+  <script>
+    const STORAGE_KEY = 'vibe_archive_jyj_catalogue_v2';
+    const memoryStore = {};
+
+    const safeStorage = {
+      getItem: function(key) {
+        try {
+          if (typeof window !== 'undefined' && window.localStorage) {
+            return window.localStorage.getItem(key);
+          }
+        } catch (e) {
+          console.info("Iframe sandbox active: memory store fallback.");
+        }
+        return memoryStore[key] || null;
+      },
+      setItem: function(key, val) {
+        try {
+          if (typeof window !== 'undefined' && window.localStorage) {
+            window.localStorage.setItem(key, val);
+            return;
+          }
+        } catch (e) {
+          console.info("Iframe sandbox active: memory store fallback.");
+        }
+        memoryStore[key] = String(val);
+      }
+    };
+
+    // Curated Minimal Monochrome Symbols
+    const FREE_ICONS = [
+      "■", "□", "▲", "◆", "●", "◎", "✦", "❖", "◈", "◇",
+      "💻", "📊", "🤖", "📐", "🔬", "⏱️", "⚡", "🌐", "📝", "🎯",
+      "📸", "🎬", "🔧", "📱", "🚀", "🛡️", "📦", "✨", "🏢", "📈"
+    ];
+
+    // Default Curated Projects for Jang Yoon-jung (JYJ)
+    const initialProjects = [
+      {
+        id: "proj-101",
+        title: "장윤정 바이브코딩 프로젝트 도록",
+        platform: "Gemini Canvas",
+        target: "제안서 심사위원 및 클라이언트",
+        creator: "장윤정",
+        collaborator: "",
+        description: "자연어 기반 바이브코딩으로 제작한 프로젝트들을 연도별 6대 기획 뼈대와 실전 검증 증빙을 바탕으로 큐레이션한 공식 작품 도록 (Generative Web Archive)",
+        url: "vibe_portfolio_studio.html",
+        year: "2026",
+        updatedAt: "2026-09-21",
+        inUse: true,
+        features: "1. 모노크롬 미니멀 갤러리 룩과 첫 화면 캡처 직접 업로드\n2. 연도별 분류 및 실제 현장 활용 검증 On/Off 스위치\n3. 제안서·이력서 별첨용 간결 도록 서식 원클릭 복사",
+        thumbIcon: "■",
+        thumbImgData: "",
+        pastUpdates: "v1.0: 컬러 프레임 시안에서 모노크롬 미니멀 갤러리로 전면 개편\nv2.0: '장윤정 바이브코딩 프로젝트 도록' × 'Generative Web Archive — Curated & worked by JYJ' 확정 적용",
+        nextUpdates: "v2.1: PDF 직접 인쇄 스타일시트 연동 및 실적 태그 다각화",
+        userFeedback: "“제안서 심사 시 공학적 신뢰도와 예술적 도록의 완성도를 동시에 보여주는 최고의 포트폴리오 형식입니다.”"
+      },
+      {
+        id: "proj-102",
+        title: "VibePlan Studio v3.1 Architect Pro",
+        platform: "Gemini Canvas",
+        target: "바이브코딩 기획자 및 1인 창업가",
+        creator: "장윤정",
+        collaborator: "",
+        description: "바이브코딩의 문맥 표류와 디버깅 핑퐁을 원천 차단하는 6대 기획 뼈대, 실시간 와이어프레임 프리뷰, 헬스 스코어 엔진 탑재 기획 도구",
+        url: "vibe_coding_architect.html",
+        year: "2026",
+        updatedAt: "2026-09-20",
+        inUse: true,
+        features: "1. 6대 기획 뼈대 및 Typeform형 스텝 위저드 모드\n2. 실시간 와이어프레임 미니어처 스켈레톤 및 기획 완성도 진단(Health Score)\n3. 6대 AI 코딩 플랫폼(Gemini, Claude, Canva 등) 동적 제약 조건 생성 및 포트폴리오 다이렉트 브릿지",
+        thumbIcon: "🛠️",
+        thumbImgData: "",
+        pastUpdates: "v3.0: 헬스 스코어 진단 엔진 및 모듈러 프롬프트 칩 탑재\nv3.1: 포트폴리오 연동 브릿지 탭 구축 완료",
+        nextUpdates: "v3.2: 팀 협업 공유를 위한 클라우드 동기화 모듈",
+        userFeedback: "“기획 뼈대를 먼저 잡고 코딩을 시작하니 오류 수정 시간이 80% 이상 단축되었습니다.”"
+      },
+      {
+        id: "proj-103",
+        title: "스마트 견적서 & 인보이스 계산기",
+        platform: "ChatGPT Canvas",
+        target: "소상공인 및 1인 크리에이터",
+        creator: "장윤정",
+        collaborator: "",
+        description: "모바일에서 1분 만에 작업 항목별 단가와 부가세를 자동 계산하고 영수증 텍스트를 발행하는 반응형 웹앱",
+        url: "#",
+        year: "2025",
+        updatedAt: "2025-11-14",
+        inUse: true,
+        features: "1. 견적 항목 실시간 추가/삭제 및 부가세 10% 자동 합산\n2. 모바일 영수증 모달 출력\n3. 인쇄 및 카카오톡 전송용 서식 원클릭 복사",
+        thumbIcon: "📊",
+        thumbImgData: "",
+        pastUpdates: "v1.0: 초기 계산 로직 빌드",
+        nextUpdates: "v1.2: 다국어(USD, JPY) 통화 지원",
+        userFeedback: "“외부 미팅 시 현장에서 바로 견적서를 발송할 수 있어 실무 활용도가 뛰어납니다.”"
+      },
+      {
+        id: "proj-104",
+        title: "포모도로 몰입 타이머 & 데일리 Todo",
+        platform: "Claude Artifacts",
+        target: "자기계발 수험생 및 직장인",
+        creator: "장윤정",
+        collaborator: "",
+        description: "25분 집중 / 5분 휴식 루틴을 시각화하고 일일 누적 집중 시간 통계를 제공하는 미니멀 생산성 웹앱",
+        url: "#",
+        year: "2024",
+        updatedAt: "2024-08-19",
+        inUse: false,
+        features: "1. 원형 게이지 프로그레스 애니메이션\n2. 당일 할 일 체크리스트 및 완료 콤보 카운터\n3. 집중 브금(White Noise) 생성기",
+        thumbIcon: "⏱️",
+        thumbImgData: "",
+        pastUpdates: "v1.0: 프로토타입 릴리즈",
+        nextUpdates: "v2.0: 로컬스토리지 주간 통계 차트 보강",
+        userFeedback: "“단순하면서도 몰입도를 높여주는 인터랙션이 훌륭합니다.”"
+      }
+    ];
+
+    let projects = [];
+    let currentYearFilter = 'all';
+    let currentUsageFilter = 'all';
+    let currentSearchTerm = '';
+    let projectToDeleteId = null;
+
+    function loadProjects() {
+      try {
+        const raw = safeStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            projects = parsed;
+          } else {
+            projects = JSON.parse(JSON.stringify(initialProjects));
+          }
+        } else {
+          projects = JSON.parse(JSON.stringify(initialProjects));
+        }
+      } catch (e) {
+        console.warn("Storage load fallback.", e);
+        projects = JSON.parse(JSON.stringify(initialProjects));
+      }
+    }
+
+    function saveProjects() {
+      try {
+        safeStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+      } catch (err) {
+        console.warn("Storage save failed.", err);
+      }
+      renderStatistics();
+      renderGallery();
+    }
+
+    function renderStatistics() {
+      const totalEl = document.getElementById('stat-total-projects');
+      const inUseEl = document.getElementById('stat-in-use-projects');
+      const aiEl = document.getElementById('stat-ai-platforms');
+
+      if (totalEl) totalEl.textContent = projects.length;
+      if (inUseEl) inUseEl.textContent = projects.filter(p => p.inUse).length;
+      
+      const platforms = new Set(projects.map(p => p.platform));
+      if (aiEl) aiEl.textContent = platforms.size;
+    }
+
+    function getFilteredProjects() {
+      return projects.filter(p => {
+        const matchYear = (currentYearFilter === 'all' || p.year === currentYearFilter);
+        const matchUsage = (currentUsageFilter === 'all' || 
+          (currentUsageFilter === 'active' && p.inUse) || 
+          (currentUsageFilter === 'lab' && !p.inUse));
+        
+        const q = currentSearchTerm.toLowerCase();
+        const matchSearch = !q || 
+          p.title.toLowerCase().includes(q) ||
+          p.target.toLowerCase().includes(q) ||
+          p.platform.toLowerCase().includes(q) ||
+          p.description.toLowerCase().includes(q);
+
+        return matchYear && matchUsage && matchSearch;
+      });
+    }
+
+    function renderGallery() {
+      const grid = document.getElementById('project-cards-grid');
+      const empty = document.getElementById('empty-state');
+      if (!grid) return;
+
+      const list = getFilteredProjects();
+
+      if (list.length === 0) {
+        grid.innerHTML = '';
+        if (empty) empty.classList.remove('hidden');
+        return;
+      }
+
+      if (empty) empty.classList.add('hidden');
+
+      grid.innerHTML = list.map(p => {
+        const hasImg = (p.thumbImgData && p.thumbImgData.length > 30);
+        return `
+          <article class="gallery-card rounded-2xl flex flex-col justify-between overflow-hidden relative group">
+            
+            <!-- Card Visual / First Screen Frame -->
+            <div class="relative w-full h-44 bg-indigo-50/40 border-b border-indigo-100 flex items-center justify-center overflow-hidden cursor-pointer" 
+                 onclick="openLightboxModalById('${p.id}')" title="클릭하여 크게보기">
+              
+              ${hasImg ? `
+                <img src="${p.thumbImgData}" alt="${escapeHtml(p.title)}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              ` : `
+                <div class="flex flex-col items-center justify-center text-indigo-700 select-none">
+                  <span class="text-4xl font-mono">${p.thumbIcon || '■'}</span>
+                  <span class="text-[9px] font-mono tracking-widest text-indigo-400 mt-2 font-bold uppercase">CATALOGUE CANVAS</span>
+                </div>
+              `}
+
+              <!-- Hover Lightbox Trigger Indicator -->
+              <div class="absolute inset-0 bg-indigo-950/50 backdrop-blur-2xs opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-white text-xs font-bold">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
+                <span>첫 화면 도록 크게보기</span>
+              </div>
+
+              <!-- Badges on Image -->
+              <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 flex-wrap">
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-white/95 text-indigo-950 border border-indigo-200 shadow-2xs backdrop-blur-sm">
+                  ${escapeHtml(p.year)}
+                </span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo-700 text-white shadow-2xs">
+                  ${escapeHtml(p.platform)}
+                </span>
+              </div>
+
+              <!-- Quick Launch External Link -->
+              ${p.url && p.url !== '#' ? `
+                <a href="${escapeHtml(p.url)}" target="_blank" onclick="event.stopPropagation()" title="실행 링크 바로 열기"
+                   class="absolute top-2.5 right-2.5 p-1.5 rounded-full bg-white/95 hover:bg-indigo-600 hover:text-white text-indigo-900 transition-all shadow-2xs border border-indigo-200">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </a>
+              ` : ''}
+            </div>
+
+            <!-- Card Body Content -->
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-wider block">Target: ${escapeHtml(p.target)}</span>
+                  <span class="text-[10px] font-mono text-zinc-400">${escapeHtml(p.updatedAt)}</span>
+                </div>
+
+                <h3 class="font-display font-extrabold text-sm sm:text-base text-zinc-950 tracking-tight line-clamp-1 group-hover:text-indigo-600 transition-colors">
+                  ${escapeHtml(p.title)}
+                </h3>
+
+                <p class="text-xs text-zinc-600 line-clamp-2 leading-relaxed font-normal">
+                  ${escapeHtml(p.description)}
+                </p>
+              </div>
+
+              <!-- Verification Badge & Action Buttons -->
+              <div class="pt-3 border-t border-indigo-50 flex items-center justify-between">
+                
+                <!-- Toggle In-Use Switch with Blue-Violet verified style -->
+                <button onclick="toggleInUseStatus('${p.id}')" title="실제 현장/제안서 활용 검증 여부 전환" 
+                        class="px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold transition-all flex items-center gap-1.5 ${
+                          p.inUse 
+                            ? 'bg-gradient-to-r from-indigo-700 to-violet-700 text-white border border-indigo-600 shadow-xs' 
+                            : 'bg-zinc-100 text-zinc-500 border border-zinc-200 hover:bg-zinc-200'
+                        }">
+                  <span class="w-1.5 h-1.5 rounded-full ${p.inUse ? 'bg-indigo-200' : 'bg-zinc-400'}"></span>
+                  <span>${p.inUse ? 'VERIFIED' : 'LAB'}</span>
+                </button>
+
+                <!-- Action Links -->
+                <div class="flex items-center gap-1">
+                  <button onclick="openEditProjectModal('${p.id}')" title="수정" class="p-1.5 rounded-lg text-indigo-600 hover:text-indigo-950 hover:bg-indigo-50 transition-all">
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                  </button>
+                  <button onclick="confirmDeleteProject('${p.id}')" title="삭제" class="p-1.5 rounded-lg text-zinc-400 hover:text-rose-600 hover:bg-rose-50 transition-all">
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+          </article>
+        `;
+      }).join('');
+    }
+
+    function setYearFilter(yr) {
+      currentYearFilter = yr;
+      document.querySelectorAll('.year-tab-btn').forEach(btn => {
+        btn.className = "year-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-zinc-600 hover:text-indigo-900 hover:bg-indigo-50 whitespace-nowrap transition-all";
+      });
+      const active = document.getElementById(`year-btn-${yr}`);
+      if (active) {
+        active.className = "year-tab-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xs shadow-indigo-500/20 whitespace-nowrap border border-indigo-500";
+      }
+      renderGallery();
+    }
+
+    function setUsageFilter(status) {
+      currentUsageFilter = status;
+      document.querySelectorAll('.usage-tab-btn').forEach(btn => {
+        btn.className = "usage-tab-btn px-3 py-1 rounded-lg text-zinc-600 hover:text-zinc-950 font-medium transition-all";
+      });
+      const active = document.getElementById(`usage-filter-${status}`);
+      if (active) {
+        active.className = "usage-tab-btn px-3 py-1 rounded-lg bg-white text-zinc-950 shadow-2xs font-bold transition-all";
+      }
+      renderGallery();
+    }
+
+    function handleSearch() {
+      currentSearchTerm = document.getElementById('search-input')?.value || '';
+      renderGallery();
+    }
+
+    function toggleInUseStatus(id) {
+      const item = projects.find(p => p.id === id);
+      if (!item) return;
+      item.inUse = !item.inUse;
+      saveProjects();
+      showToast(`[${item.title}] 상태가 ${item.inUse ? '현장 검증 실적(VERIFIED)' : '연구/실험용(LAB)'}으로 변경되었습니다.`);
+    }
+
+    function openAddProjectModal() {
+      const modal = document.getElementById('project-modal');
+      const form = document.getElementById('project-form');
+      if (!modal || !form) return;
+
+      form.reset();
+      document.getElementById('form-project-id').value = '';
+      document.getElementById('modal-title').textContent = '도록 작품 등록';
+      document.getElementById('form-year').value = '2026';
+      document.getElementById('form-updated-at').value = new Date().toISOString().slice(0, 10);
+      document.getElementById('form-in-use').checked = true;
+      document.getElementById('form-thumb-icon').value = '■';
+      document.getElementById('icon-preview-box').textContent = '■';
+      document.getElementById('form-uploaded-img-data').value = '';
+      document.getElementById('image-upload-status').textContent = '등록된 이미지 없음 (심볼 그래픽 적용)';
+      document.getElementById('btn-remove-image').classList.add('hidden');
+
+      modal.classList.remove('hidden');
+    }
+
+    function openEditProjectModal(id) {
+      const p = projects.find(x => x.id === id);
+      if (!p) return;
+
+      const modal = document.getElementById('project-modal');
+      const form = document.getElementById('project-form');
+      if (!modal || !form) return;
+
+      document.getElementById('form-project-id').value = p.id;
+      document.getElementById('modal-title').textContent = '도록 작품 정보 수정';
+      document.getElementById('form-title').value = p.title || '';
+      document.getElementById('form-platform').value = p.platform || 'Gemini Canvas';
+      document.getElementById('form-target').value = p.target || '';
+      document.getElementById('form-collaborator').value = p.collaborator || '';
+      document.getElementById('form-desc').value = p.description || '';
+      document.getElementById('form-url').value = p.url || '';
+      document.getElementById('form-year').value = p.year || '2026';
+      document.getElementById('form-updated-at').value = p.updatedAt || new Date().toISOString().slice(0, 10);
+      document.getElementById('form-in-use').checked = !!p.inUse;
+      document.getElementById('form-features').value = p.features || '';
+      document.getElementById('form-thumb-icon').value = p.thumbIcon || '■';
+      document.getElementById('icon-preview-box').textContent = p.thumbIcon || '■';
+      document.getElementById('form-past-updates').value = p.pastUpdates || '';
+      document.getElementById('form-next-updates').value = p.nextUpdates || '';
+      document.getElementById('form-user-feedback').value = p.userFeedback || '';
+
+      const imgData = p.thumbImgData || '';
+      document.getElementById('form-uploaded-img-data').value = imgData;
+      if (imgData.length > 30) {
+        document.getElementById('image-upload-status').textContent = '첫 화면 캡처 이미지 등록됨';
+        document.getElementById('btn-remove-image').classList.remove('hidden');
+      } else {
+        document.getElementById('image-upload-status').textContent = '등록된 이미지 없음 (심볼 그래픽 적용)';
+        document.getElementById('btn-remove-image').classList.add('hidden');
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeProjectModal() {
+      document.getElementById('project-modal')?.classList.add('hidden');
+    }
+
+    function handleSaveProject(e) {
+      e.preventDefault();
+      const idInput = document.getElementById('form-project-id').value;
+      const isNew = !idInput;
+
+      const pId = isNew ? ('proj-' + Date.now()) : idInput;
+      const title = document.getElementById('form-title').value.trim();
+      const platform = document.getElementById('form-platform').value;
+      const target = document.getElementById('form-target').value.trim();
+      const collaborator = document.getElementById('form-collaborator').value.trim();
+      const description = document.getElementById('form-desc').value.trim();
+      const url = document.getElementById('form-url').value.trim();
+      const year = document.getElementById('form-year').value;
+      const updatedAt = document.getElementById('form-updated-at').value;
+      const inUse = document.getElementById('form-in-use').checked;
+      const features = document.getElementById('form-features').value.trim();
+      const thumbIcon = document.getElementById('form-thumb-icon').value || '■';
+      const thumbImgData = document.getElementById('form-uploaded-img-data').value || '';
+      const pastUpdates = document.getElementById('form-past-updates').value.trim();
+      const nextUpdates = document.getElementById('form-next-updates').value.trim();
+      const userFeedback = document.getElementById('form-user-feedback').value.trim();
+
+      const item = {
+        id: pId,
+        title,
+        platform,
+        target,
+        creator: '장윤정',
+        collaborator,
+        description,
+        url,
+        year,
+        updatedAt,
+        inUse,
+        features,
+        thumbIcon,
+        thumbImgData,
+        pastUpdates,
+        nextUpdates,
+        userFeedback
+      };
+
+      if (isNew) {
+        projects.unshift(item);
+        showToast(`새 도록 작품 [${title}]이 등록되었습니다.`);
+      } else {
+        const idx = projects.findIndex(p => p.id === pId);
+        if (idx !== -1) {
+          projects[idx] = item;
+          showToast(`[${title}] 정보가 성공적으로 수정되었습니다.`);
+        }
+      }
+
+      saveProjects();
+      closeProjectModal();
+    }
+
+    function handleImageFileUpload(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith('image/')) {
+        showToast('이미지 파일(PNG, JPG, WebP 등)만 업로드할 수 있습니다.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const base64 = evt.target.result;
+        document.getElementById('form-uploaded-img-data').value = base64;
+        document.getElementById('image-upload-status').textContent = `파일 업로드 완료: ${file.name}`;
+        document.getElementById('btn-remove-image').classList.remove('hidden');
+        showToast('캡처 이미지가 등록되었습니다.');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeUploadedImage() {
+      document.getElementById('form-uploaded-img-data').value = '';
+      document.getElementById('image-upload-status').textContent = '등록된 이미지 없음 (심볼 그래픽 적용)';
+      document.getElementById('btn-remove-image').classList.add('hidden');
+      document.getElementById('form-thumb-file').value = '';
+      showToast('등록된 이미지가 제거되었습니다.');
+    }
+
+    function confirmDeleteProject(id) {
+      const p = projects.find(x => x.id === id);
+      if (!p) return;
+      projectToDeleteId = id;
+      const text = document.getElementById('delete-confirm-text');
+      if (text) text.textContent = `[${p.title}] 작품을 도록 아카이브에서 완전히 삭제하시겠습니까?`;
+      document.getElementById('delete-modal')?.classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+      projectToDeleteId = null;
+      document.getElementById('delete-modal')?.classList.add('hidden');
+    }
+
+    function executeDeleteProject() {
+      if (!projectToDeleteId) return;
+      const idx = projects.findIndex(p => p.id === projectToDeleteId);
+      if (idx !== -1) {
+        const name = projects[idx].title;
+        projects.splice(idx, 1);
+        saveProjects();
+        showToast(`[${name}] 작품이 도록에서 삭제되었습니다.`);
+      }
+      closeDeleteModal();
+    }
+
+    function openLightboxModalById(id) {
+      const p = projects.find(x => x.id === id);
+      if (!p) return;
+
+      document.getElementById('zoom-title').textContent = p.title;
+      document.getElementById('zoom-desc').textContent = p.description;
+      document.getElementById('zoom-target').textContent = p.target;
+      document.getElementById('zoom-creators').textContent = p.collaborator 
+        ? `장윤정 (총괄) · ${p.collaborator} (협력)` 
+        : `장윤정 (JYJ)`;
+      document.getElementById('zoom-updated-at').textContent = p.updatedAt;
+
+      document.getElementById('zoom-badge-platform').textContent = p.platform;
+      document.getElementById('zoom-badge-year').textContent = `${p.year}년`;
+      
+      const usageEl = document.getElementById('zoom-badge-usage');
+      if (usageEl) {
+        usageEl.textContent = p.inUse ? '현장 검증 실적 (VERIFIED)' : '연구/프로토타입 (LAB)';
+        usageEl.className = p.inUse 
+          ? "px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-zinc-950 text-white" 
+          : "px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-zinc-100 text-zinc-600 border border-zinc-200";
+      }
+
+      const imgEl = document.getElementById('zoom-screen-img');
+      const iconWrap = document.getElementById('zoom-screen-icon-wrap');
+      const iconEl = document.getElementById('zoom-screen-icon');
+
+      if (p.thumbImgData && p.thumbImgData.length > 30) {
+        imgEl.src = p.thumbImgData;
+        imgEl.classList.remove('hidden');
+        iconWrap.classList.add('hidden');
+      } else {
+        imgEl.classList.add('hidden');
+        iconWrap.classList.remove('hidden');
+        iconEl.textContent = p.thumbIcon || '■';
+      }
+
+      const launchBtn = document.getElementById('zoom-launch-btn');
+      if (launchBtn) {
+        if (p.url && p.url !== '#') {
+          launchBtn.href = p.url;
+          launchBtn.classList.remove('hidden');
+        } else {
+          launchBtn.classList.add('hidden');
+        }
+      }
+
+      document.getElementById('lightbox-modal')?.classList.remove('hidden');
+    }
+
+    function closeLightboxModal() {
+      document.getElementById('lightbox-modal')?.classList.add('hidden');
+    }
+
+    function closeLightbox(e) {
+      if (e.target.id === 'lightbox-modal') {
+        closeLightboxModal();
+      }
+    }
+
+    function openBridgeModal() {
+      document.getElementById('bridge-input-text').value = '';
+      document.getElementById('bridge-modal')?.classList.remove('hidden');
+    }
+
+    function closeBridgeModal() {
+      document.getElementById('bridge-modal')?.classList.add('hidden');
+    }
+
+    function executeBridgeImport() {
+      const raw = document.getElementById('bridge-input-text')?.value.trim();
+      if (!raw) {
+        showToast('가져올 JSON 데이터를 입력창에 붙여넣어 주세요.');
+        return;
+      }
+
+      try {
+        const data = JSON.parse(raw);
+        if (!data.title) {
+          showToast('올바른 바이브코딩 프로젝트 데이터 규격이 아닙니다.');
+          return;
+        }
+
+        const newId = 'proj-' + Date.now();
+        const importedProject = {
+          id: newId,
+          title: data.title || "새 프로젝트",
+          platform: data.platform || "Gemini Canvas",
+          target: data.target || "일반 사용자",
+          creator: "장윤정",
+          collaborator: data.collaborator || "",
+          description: data.description || "",
+          url: data.url || "#",
+          year: data.year || "2026",
+          updatedAt: data.updatedAt || new Date().toISOString().slice(0, 10),
+          inUse: (data.inUse !== undefined) ? !!data.inUse : true,
+          features: data.features || "",
+          thumbIcon: data.thumbIcon || "■",
+          thumbImgData: data.thumbImgData || "",
+          pastUpdates: data.pastUpdates || "v1.0: 1번 기획 도구(VibePlan Studio) 연동 완료",
+          nextUpdates: data.nextUpdates || "v1.1: 기능 확장 및 실전 배포",
+          userFeedback: data.userFeedback || "“기획 뼈대가 탄탄하여 현장 도입성이 뛰어납니다.”"
+        };
+
+        projects.unshift(importedProject);
+        saveProjects();
+        closeBridgeModal();
+        showToast(`[${importedProject.title}] 프로젝트가 도록에 성공적으로 등록되었습니다!`);
+      } catch (err) {
+        showToast('JSON 형식 구문 오류입니다. 1번 앱에서 정확히 복사했는지 확인하세요.');
+      }
+    }
+
+    function openIconPickerModal() {
+      const container = document.getElementById('icon-grid-container');
+      if (container) {
+        container.innerHTML = FREE_ICONS.map(ic => `
+          <button type="button" onclick="selectSymbolIcon('${ic}')" 
+                  class="p-2.5 rounded-xl border border-zinc-200 hover:border-zinc-900 hover:bg-zinc-100 flex items-center justify-center transition-all">
+            ${ic}
+          </button>
+        `).join('');
+      }
+      document.getElementById('icon-picker-modal')?.classList.remove('hidden');
+    }
+
+    function closeIconPickerModal() {
+      document.getElementById('icon-picker-modal')?.classList.add('hidden');
+    }
+
+    function selectSymbolIcon(ic) {
+      document.getElementById('form-thumb-icon').value = ic;
+      document.getElementById('icon-preview-box').textContent = ic;
+      closeIconPickerModal();
+    }
+
+    function openExportModal() {
+      renderExportContent();
+      document.getElementById('export-modal')?.classList.remove('hidden');
+    }
+
+    function closeExportModal() {
+      document.getElementById('export-modal')?.classList.add('hidden');
+    }
+
+    function renderExportContent() {
+      const box = document.getElementById('export-text-box');
+      if (!box) return;
+
+      const scopeRadio = document.querySelector('input[name="exportScope"]:checked');
+      const inUseOnly = (scopeRadio && scopeRadio.value === 'inUseOnly');
+
+      const targetList = inUseOnly ? projects.filter(p => p.inUse) : projects;
+
+      let doc = `============================================================\n`;
+      doc += `장윤정 바이브코딩 프로젝트 도록\n`;
+      doc += `Generative Web Archive — Curated & worked by JYJ\n`;
+      doc += `총괄 디렉터 & 엔지니어: 장윤정 (JYJ)\n`;
+      doc += `문서 생성 일자: ${new Date().toISOString().slice(0, 10)}\n`;
+      doc += `수록 범위: ${inUseOnly ? '현장 검증 완료 실적작만 수록' : '전체 등록 도록 수록'} (총 ${targetList.length}건)\n`;
+      doc += `============================================================\n\n`;
+
+      targetList.forEach((p, idx) => {
+        doc += `[작품 #${String(idx + 1).padStart(2, '0')}] ${p.title}\n`;
+        doc += `------------------------------------------------------------\n`;
+        doc += `• 수록 연도: ${p.year}년  |  최신 업데이트: ${p.updatedAt}\n`;
+        doc += `• 작업 플랫폼: ${p.platform}\n`;
+        doc += `• 대상(타깃): ${p.target}\n`;
+        doc += `• 총괄 제작: 장윤정 (JYJ)${p.collaborator ? `  |  협력: ${p.collaborator}` : ''}\n`;
+        doc += `• 현장 실적 검증 여부: ${p.inUse ? '공식 검증 완료 (VERIFIED)' : '연구/프로토타입 (LAB)'}\n`;
+        doc += `• 서비스 개요: ${p.description}\n`;
+        if (p.features) {
+          doc += `• 주요 핵심 기능:\n${p.features.split('\n').map(f => '    ' + f).join('\n')}\n`;
+        }
+        if (p.url && p.url !== '#') {
+          doc += `• 실행 및 배포 링크: ${p.url}\n`;
+        }
+        if (p.userFeedback) {
+          doc += `• 평가위원/사용자 피드백: ${p.userFeedback}\n`;
+        }
+        doc += `\n`;
+      });
+
+      doc += `============================================================\n`;
+      doc += `본 문서는 장윤정 바이브코딩 프로젝트 도록(Generative Web Archive)의 공식 실적 데이터입니다.\n`;
+      doc += `============================================================`;
+
+      box.textContent = doc;
+    }
+
+    function copyExportText() {
+      const box = document.getElementById('export-text-box');
+      if (!box) return;
+      copyToClipboard(box.textContent, "제안서용 실적 도록 문서 전체가 복사되었습니다! 제안서 또는 보고서에 붙여넣으세요.");
+    }
+
+    function exportDataJson() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(projects, null, 2));
+      const anchor = document.createElement('a');
+      anchor.setAttribute("href", dataStr);
+      anchor.setAttribute("download", `jyj_vibe_catalogue_backup_${new Date().toISOString().slice(0, 10)}.json`);
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      showToast("도록 전체 백업 JSON 파일이 다운로드되었습니다.");
+    }
+
+    function triggerDataImport() {
+      document.getElementById('import-json-file')?.click();
+    }
+
+    function handleDataImport(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const imported = JSON.parse(evt.target.result);
+          if (Array.isArray(imported)) {
+            projects = imported;
+            saveProjects();
+            showToast("도록 데이터 복원이 성공적으로 완료되었습니다!");
+          } else {
+            showToast("호환되지 않는 JSON 파일 규격입니다.");
+          }
+        } catch (err) {
+          showToast("JSON 파일 분석 중 오류가 발생했습니다.");
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = '';
+    }
+
+    function copyToClipboard(text, successMsg) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(successMsg);
+        }).catch(() => {
+          fallbackCopyText(text, successMsg);
+        });
+      } else {
+        fallbackCopyText(text, successMsg);
+      }
+    }
+
+    function fallbackCopyText(text, successMsg) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg);
+      } catch (err) {
+        showToast("복사에 실패했습니다. 텍스트를 직접 복사하세요.");
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const msg = document.getElementById('toast-message');
+      if (!toast || !msg) return;
+      msg.textContent = message;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2600);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function initApp() {
+      loadProjects();
+      renderStatistics();
+      renderGallery();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+  </script>
+</body>
+</html>
